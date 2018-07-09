@@ -25,18 +25,34 @@ public class TransactionResultsPage extends StorePage {
 		transactionResultsTable = new TableWebElement(transactionResultsTableWE);
 	}
 	
+	/**
+	 * Gets the price for a given item
+	 * @param itemname Item name
+	 * @return price of item in table
+	 */
 	public double getPriceForItem(String itemname)
 	{
 		testLog.debug("Getting line price for [" + itemname + "]");
 		int row = transactionResultsTable.getRowByCellText("Name", itemname);
 		return Double.parseDouble(transactionResultsTable.getCell("Price", row).getText().replace("$", ""));
 	}
+	
+	/**
+	 * Gets the quantity of a given item in the table
+	 * @param itemname Item name
+	 * @return quantity of item in table
+	 */
 	public int getQtyForItem(String itemname)
 	{
 		testLog.debug("Getting line quantity for [" + itemname + "]");
 		int row = transactionResultsTable.getRowByCellText("Name", itemname);
 		return Integer.parseInt(transactionResultsTable.getCell("Quantity", row).getText());
 	}
+	/**
+	 * Gets the total price of an item in the table
+	 * @param itemname item name
+	 * @return total price in table
+	 */
 	public double getTotalForItem(String itemname)
 	{
 		testLog.debug("Getting line total for [" + itemname + "]");
@@ -44,6 +60,10 @@ public class TransactionResultsPage extends StorePage {
 		return Double.parseDouble(transactionResultsTable.getCell("Item Total", row).getText().replace("$", ""));
 	}
 	
+	/**
+	 * Gets the total shipping cost of all items
+	 * @return total shipping
+	 */
 	public double getTotalShipping()
 	{
 		testLog.debug("Get shipping total");
@@ -53,6 +73,10 @@ public class TransactionResultsPage extends StorePage {
 		return Double.parseDouble(totalShipping);
 	}
 
+	/**
+	 * Gets the total cost of the order 
+	 * @return total cost of order
+	 */
 	public double getTotal()
 	{
 		testLog.debug("Get order total");

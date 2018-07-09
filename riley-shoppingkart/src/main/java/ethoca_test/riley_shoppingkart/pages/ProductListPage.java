@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -30,6 +31,27 @@ public class ProductListPage extends StorePage {
 		WebElement itemTableCell = productsTable.findElement(By.xpath("//div[@class='productcol' and .//a[contains(text(), '" + itemName + "')]]"));
 		WebElement addToCartButton = itemTableCell.findElement(By.className("wpsc_buy_button"));
 		addToCartButton.click();
+	}
+	
+	/**
+	 * Searches for an item name and retrieves price field
+	 * @param itemName name of item in product list
+	 * @return price for the item as double, -1 if not found
+	 */
+	public double getPriceForItem(String itemName)
+	{
+		testLog.debug("Getting price for ["+itemName+"]");
+		try
+		{
+			WebElement itemTableCell = productsTable.findElement(By.xpath("//div[@class='productcol' and .//a[contains(text(), '" + itemName + "')]]"));
+			WebElement itemPrice = itemTableCell.findElement(By.xpath("//span[contains(@class, 'currentprice')]"));
+			return Double.parseDouble(itemPrice.getText().replace("$", ""));
+		}
+		catch(NoSuchElementException e)
+		{
+			return -1; // not found, do not abort here
+		}
+		
 	}
 	
 	/**

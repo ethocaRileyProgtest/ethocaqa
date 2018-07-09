@@ -7,7 +7,7 @@
         <methods>
           <include name="startSeleniumBrowser"/>
           <include name="startTest"/>
-          <include name="testBuySingleItem" invocation-numbers="1"/>
+          <include name="testBuySingleItem" invocation-numbers="0"/>
           <include name="tearDownDriver"/>
           <include name="setUpLogging"/>
         </methods>

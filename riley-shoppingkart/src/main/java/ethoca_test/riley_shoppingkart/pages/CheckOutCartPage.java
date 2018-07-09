@@ -36,13 +36,17 @@ public class CheckOutCartPage extends StorePage {
 			cartItems
 					.put(elem
 							.findElement(
-									By.xpath("//td[contains(@class, 'wpsc_product_name']/a"))
+									By.xpath("//td[contains(@class, 'wpsc_product_name')]/a"))
 							.getText(), Integer.parseInt(elem.findElement(
-							By.className("qty")).getText()));
+							By.xpath("//input[@name='quantity']")).getAttribute("value")));
 		}
 		return cartItems;
 	}
 	
+	/**
+	 * Click the continue button and go to the info page
+	 * @return Cart info page object
+	 */
 	public CheckOutInfoPage clickContinue()
 	{
 		testLog.debug("Clicking Continue button");

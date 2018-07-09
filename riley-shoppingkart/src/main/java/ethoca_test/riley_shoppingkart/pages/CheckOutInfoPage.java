@@ -9,6 +9,18 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CheckOutInfoPage extends StorePage {
 
+	@FindBy(xpath="//tr[contains(@class, 'total_item')]")
+	private WebElement totalItem;
+	
+	@FindBy(xpath="//tr[contains(@class, 'total_shipping')]")
+	private WebElement totalShipping;
+	
+	@FindBy(xpath="//tr[contains(@class, 'total_tax')]")
+	private WebElement totalTax;
+	
+	@FindBy(xpath="//tr[@class ='total_price']")
+	private WebElement totalPrice;
+	
 	@FindBy(xpath = "//input[@value='Purchase']")
 	private WebElement purchaseButton;
 
@@ -81,7 +93,51 @@ public class CheckOutInfoPage extends StorePage {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
 		wait.until(ExpectedConditions.visibilityOf(billingCityField));
 	}
+	
+	/**
+	 * Retrieves total shipping cost
+	 * @return the total shipping cost of the order
+	 */
+	public double getTotalShipping()
+	{
+		testLog.debug("Reading total shipping");
+		return Double.parseDouble(totalShipping.getText().replaceAll("[^\\.0123456789]",""));
+	}
 
+	/**
+	 * Retrieves total item cost
+	 * @return the total item cost of the order
+	 */
+	public double getItemTotal()
+	{
+		testLog.debug("Reading item total");
+		return Double.parseDouble(totalItem.getText().replaceAll("[^\\.0123456789]",""));
+	}
+	
+	/**
+	 * Retrieves total order cost
+	 * @return the total cost of the order
+	 */
+	public double getTotalPrice()
+	{
+		testLog.debug("Reading total price");
+		return Double.parseDouble(totalPrice.getText().replaceAll("[^\\.0123456789]",""));
+	}
+	
+	/**
+	 * Retrieves total tax cost
+	 * @return the total tax cost of the order
+	 */
+	public double getTaxTotal()
+	{
+		testLog.debug("Reading tax total");
+		return Double.parseDouble(totalTax.getText().replaceAll("[^\\.0123456789]",""));
+	}
+	
+	/**
+	 * Clicks the "purchase" button and navigates to the transaction results page
+	 * @return transaction results page object
+	 */
 	public TransactionResultsPage clickPurchase() {
 		testLog.debug("Clicking Purchase button");
 		purchaseButton.click();

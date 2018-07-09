@@ -30,6 +30,10 @@ public class StorePage {
 		PageFactory.initElements(driver, this);
 	}
 	
+	/**
+	 * Navigates to the Accessories page using the menu
+	 * @return Product list page object for accessories
+	 */
 	public ProductListPage goToAccessories()
 	{
 		testLog.debug("Navigating to accessories page");
@@ -39,6 +43,10 @@ public class StorePage {
 		return new ProductListPage(driver);
 	}
 	
+	/**
+	 * clicks the checkout cart icon and navigates to the cart page
+	 * @return Checkout cart page object
+	 */
 	public CheckOutCartPage clickCheckOut()
 	{
 		testLog.debug("Navigating to checkout cart page");
@@ -47,7 +55,9 @@ public class StorePage {
 		return new CheckOutCartPage(driver);
 	}
 	
-    //Wait Until JS Ready
+	/**
+	 * waits until javascript ready
+	 */
     public void waitUntilJSReady() {
         WebDriverWait wait = new WebDriverWait(driver,15);
         JavascriptExecutor jsExec = (JavascriptExecutor) driver;

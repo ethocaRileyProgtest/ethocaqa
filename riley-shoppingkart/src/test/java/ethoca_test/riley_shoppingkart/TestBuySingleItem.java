@@ -74,15 +74,20 @@ public class TestBuySingleItem extends SeleniumTemplate
 	{
 				
 		// should get price for item before we buy for expected result
-		
+		double expectedPrice = accessories.getPriceForItem(item);
 		accessories.AddItemToCart(item);
 		CheckOutCartPage cart = accessories.clickCheckOut();
 
+		int expectedQty = 1; // TODO: move to TDO when marshaled		
+		
 		testLog.debug("Verify cart items present");
 		Map<String, Integer> items = cart.getCartItems();
-		Assert.assertEquals(items.get(item), (Integer) 1, "ERROR: Mismatched item quantity for item [" + item + "]");
+		Assert.assertEquals(items.get(item), (Integer) expectedQty, "ERROR: Mismatched item quantity for item [" + item + "]");
 		
 		CheckOutInfoPage info = cart.clickContinue();
+		testLog.debug("Verifying total with shipping");
+		Assert.assertEquals(info.getItemTotal(), expectedQty * expectedPrice, "ERROR: Price does not match in item total");
+		Assert.assertEquals(info.getItemTotal()+info.getTotalShipping(), info.getTotalPrice(), "ERROR: Shipping cost incorrectly added to total");
 		
 		info.fillEmailField(email);
 		// casting here is dumb, but again, we're not using strongly typed fields
