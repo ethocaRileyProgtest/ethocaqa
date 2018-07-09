@@ -3,7 +3,9 @@ package ethoca_test.riley_shoppingkart.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CheckOutInfoPage extends StorePage {
 
@@ -28,11 +30,12 @@ public class CheckOutInfoPage extends StorePage {
 	@FindBy(id = "wpsc_checkout_form_5")
 	private WebElement billingCityField;
 
-	@FindBy(id = "wpsc_checkout_form_7_region")
-	private Select billingProvinceSelect;
-
+	@FindBy(id = "wpsc_checkout_form_6")
+	private WebElement billingProvinceSelectWE;
+	
 	@FindBy(id = "wpsc_checkout_form_7")
-	private Select billingCountrySelect;
+	private WebElement billingCountrySelectWE;
+	private Select billingCountrySelect = new Select(billingCountrySelectWE);
 
 	@FindBy(id = "wpsc_checkout_form_8")
 	private WebElement billingPostalCodeField;
@@ -52,21 +55,26 @@ public class CheckOutInfoPage extends StorePage {
 	@FindBy(id = "wpsc_checkout_form_14")
 	private WebElement shippingCityField;
 
-	@FindBy(id = "wpsc_checkout_form_16_region")
-	private Select shippingProvinceSelect;
+	@FindBy(id = "wpsc_checkout_form_15")
+	private WebElement shippingProvinceSelectWE;
 
 	@FindBy(id = "wpsc_checkout_form_16")
-	private Select shippingCountrySelect;
+	private WebElement shippingCountrySelectWE;
+	private Select shippingCountrySelect = new Select(shippingCountrySelectWE);
 
 	@FindBy(id = "wpsc_checkout_form_17")
 	private WebElement shippingPostalCodeField;
 
 	public CheckOutInfoPage(WebDriver driver) {
 		super(driver);
+		// just wait for the page to load explicitly, this is junk
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.visibilityOf(billingProvinceSelectWE));
 	}
 
 	public TransactionResultsPage clickPurchase() {
 		purchaseButton.click();
+		waitUntilJSReady();
 		return new TransactionResultsPage(driver);
 	}
 
@@ -105,11 +113,11 @@ public class CheckOutInfoPage extends StorePage {
 	}
 
 	public void fillBillingProvinceSelect(String billingProvinceSelect) {
-		this.billingProvinceSelect.selectByValue(billingProvinceSelect);
+		this.billingProvinceSelectWE.sendKeys(billingProvinceSelect);
 	}
 
 	public void fillBillingCountrySelect(String billingCountrySelect) {
-		this.billingCountrySelect.selectByValue(billingCountrySelect);
+		this.billingCountrySelect.selectByVisibleText(billingCountrySelect);
 	}
 
 	public void fillBillingPostalCodeField(String billingPostalCode) {
@@ -137,11 +145,11 @@ public class CheckOutInfoPage extends StorePage {
 	}
 
 	public void fillShippingProvinceSelect(String shippingProvinceSelect) {
-		this.shippingProvinceSelect.selectByValue(shippingProvinceSelect);
+		this.shippingProvinceSelectWE.sendKeys(shippingProvinceSelect);
 	}
 
 	public void fillShippingCountrySelect(String shippingCountrySelect) {
-		this.shippingCountrySelect.selectByValue(shippingCountrySelect);
+		this.shippingCountrySelect.selectByVisibleText(shippingCountrySelect);
 	}
 
 	public void fillShippingPostalCodeField(String shippingPostalCode) {

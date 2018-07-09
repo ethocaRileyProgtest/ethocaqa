@@ -54,7 +54,7 @@ public class TableWebElement
 		{
 			if(cells.get(x).getText().equals(cellValue))
 			{
-				return x;
+				return x+1;
 			}			
 		}
 		return -1;

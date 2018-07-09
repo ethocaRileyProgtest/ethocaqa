@@ -26,7 +26,7 @@ public class ProductListPage extends StorePage {
 	 */
 	public void AddItemToCart(String itemName)
 	{
-		WebElement itemTableCell = productsTable.findElement(By.xpath("//div[@class='productcol' AND ./a[@class='wpsc_product_title' AND contains(text(), '" + itemName + "')]]"));
+		WebElement itemTableCell = productsTable.findElement(By.xpath("//div[@class='productcol' and .//a[contains(text(), '" + itemName + "')]]"));
 		WebElement addToCartButton = itemTableCell.findElement(By.className("wpsc_buy_button"));
 		addToCartButton.click();
 	}

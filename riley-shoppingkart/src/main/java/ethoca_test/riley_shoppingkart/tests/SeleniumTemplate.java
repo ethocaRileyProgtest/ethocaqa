@@ -80,4 +80,9 @@ public class SeleniumTemplate {
 		testLog.debug("Tests complete. Closing browser.");
 		driver.close();
 	}
+	
+	protected WebDriver getDriver()
+	{
+		return driver;
+	}
 }

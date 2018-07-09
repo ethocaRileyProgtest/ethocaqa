@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
@@ -40,11 +40,12 @@ public class TestBuySingleItem extends SeleniumTemplate
 		addressTDO[0] = addr1;
 		addr2.put("FirstName", "John");
 		addr2.put("LastName", "Johnson");
-		addr1.put("City", "Brampton");
-		addr1.put("State", "Ontario");
-		addr1.put("Country", "Canada");
-		addr1.put("Postal", "L5N2Z4");
-		addr1.put("Phone", "123-4567");
+		addr1.put("Address", "221 Test Rd");
+		addr2.put("City", "Brampton");
+		addr2.put("State", "Ontario");
+		addr2.put("Country", "Canada");
+		addr2.put("Postal", "L5N2Z4");
+		addr2.put("Phone", "123-4567");
 		addressTDO[1] = addr2; 
 	}
 	
@@ -52,7 +53,7 @@ public class TestBuySingleItem extends SeleniumTemplate
 	public Object[][] prepareTestData()
 	{	
 		populateAddressTDO(); // in a real implementation we would use JAXB marshaling from file here
-		return new Object[][] {{"Magic Mouse", "john.smith@mailinator.com", addressTDO[0], true}, {"Magic Mouse", "qa@mailinator.com", addressTDO[1], false, addressTDO[0]}};				
+		return new Object[][] {{"Magic Mouse", "john.smith@mailinator.com", addressTDO[0], true, null}, {"Magic Mouse", "qa@mailinator.com", addressTDO[1], false, addressTDO[0]}};				
 	}
 	
 	ProductListPage accessories;
@@ -60,10 +61,10 @@ public class TestBuySingleItem extends SeleniumTemplate
 	/**
 	 * Start driver, set up and navigate to the accessories page.
 	 */
-	@BeforeTest
+	@BeforeMethod
 	public void startTest()
 	{
-		driver.get("http://store.demoqa.com");
+		getDriver().get("http://store.demoqa.com");
 		StorePage mainPage = new StorePage(driver);
 		accessories = mainPage.goToAccessories();
 	}
@@ -81,13 +82,14 @@ public class TestBuySingleItem extends SeleniumTemplate
 		
 		CheckOutInfoPage info = cart.clickContinue();
 		
+		info.fillEmailField(email);
 		// casting here is dumb, but again, we're not using strongly typed fields
 		info.fillBillingProvinceSelect((String) billingAddress.get("State"));
-		info.fillBillingPostalCodeField((String) billingAddress.get("PostalCode"));
+		info.fillBillingPostalCodeField((String) billingAddress.get("Postal"));
 		info.fillBillingPhoneField((String) billingAddress.get("Phone"));
 		info.fillBillingLastNameField((String) billingAddress.get("LastName"));
 		info.fillBillingFirstNameField((String) billingAddress.get("FirstName"));
-		info.fillBillingCountrySelect((String) billingAddress.get("Country"));
+		info.fillBillingCountrySelect((String) billingAddress.get("Country"));		
 		info.fillBillingCityField((String) billingAddress.get("City"));
 		info.fillBillingAddressField((String) billingAddress.get("Address"));
 		
@@ -98,7 +100,7 @@ public class TestBuySingleItem extends SeleniumTemplate
 		else
 		{			
 			info.fillShippingProvinceSelect((String) shippingAddress.get("State"));
-			info.fillShippingPostalCodeField((String) shippingAddress.get("PostalCode"));
+			info.fillShippingPostalCodeField((String) shippingAddress.get("Postal"));
 			info.fillShippingLastNameField((String) shippingAddress.get("LastName"));
 			info.fillShippingFirstNameField((String) shippingAddress.get("FirstName"));
 			info.fillShippingCountrySelect((String) shippingAddress.get("Country"));
@@ -111,8 +113,9 @@ public class TestBuySingleItem extends SeleniumTemplate
 		double itemPrice = result.getPriceForItem(item);
 		double totalForItem = result.getTotalForItem(item);		
 		double total = result.getTotal();
+		double shipping = result.getTotalShipping();
 		int qty = result.getQtyForItem(item);
 		Assert.assertEquals(itemPrice * qty, totalForItem, "ERROR: Item Total Incorrect");		
-		Assert.assertEquals(itemPrice, total, "ERROR: More than Single Item Cost in Total");
+		Assert.assertEquals(itemPrice +shipping, total, "ERROR: More than Single Item Cost in Total");
 	}
 }

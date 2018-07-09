@@ -14,7 +14,7 @@ public class CheckOutCartPage extends StorePage {
 	@FindBy(className = "checkout_cart")
 	private WebElement cartItemsTable;
 
-	@FindBy(xpath="//a[@class='step2']/span[contains(text(), 'Continue')]")
+	@FindBy(xpath="//a[@class='step2' and ./span[contains(text(), 'Continue')]]")
 	private WebElement continueButton;
 	
 	public CheckOutCartPage(WebDriver driver) {

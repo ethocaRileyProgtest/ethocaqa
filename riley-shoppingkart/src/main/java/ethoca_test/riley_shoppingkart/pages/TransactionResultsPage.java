@@ -17,7 +17,7 @@ public class TransactionResultsPage extends StorePage {
 	
 	TableWebElement transactionResultsTable;
 	
-	@FindBy(xpath="//div[@class='wpsc-transaction-results-wrap']/p")
+	@FindBy(xpath="//div[@class='wpsc-transaction-results-wrap']/p[3]")
 	private WebElement totals;	
 	
 	public TransactionResultsPage(WebDriver driver) {
@@ -38,13 +38,13 @@ public class TransactionResultsPage extends StorePage {
 	public double getTotalForItem(String itemname)
 	{
 		int row = transactionResultsTable.getRowByCellText("Name", itemname);
-		return Double.parseDouble(transactionResultsTable.getCell("Total", row).getText().replace("$", ""));
+		return Double.parseDouble(transactionResultsTable.getCell("Item Total", row).getText().replace("$", ""));
 	}
 	
 	public double getTotalShipping()
 	{
 		String text = totals.getText();
-		int breakpoint = text.indexOf("<br>");
+		int breakpoint = text.indexOf("\n");
 		String totalShipping = text.substring(text.indexOf(SHIPPING_STRING) +  SHIPPING_STRING.length(), breakpoint); 
 		return Double.parseDouble(totalShipping);
 	}
