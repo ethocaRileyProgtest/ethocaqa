@@ -84,12 +84,13 @@ public class TestBuySingleItem extends SeleniumTemplate
 		
 		info.fillEmailField(email);
 		// casting here is dumb, but again, we're not using strongly typed fields
+		// have to fill country first wow
+		info.fillBillingCountrySelect((String) billingAddress.get("Country"));		
 		info.fillBillingProvinceSelect((String) billingAddress.get("State"));
 		info.fillBillingPostalCodeField((String) billingAddress.get("Postal"));
 		info.fillBillingPhoneField((String) billingAddress.get("Phone"));
 		info.fillBillingLastNameField((String) billingAddress.get("LastName"));
 		info.fillBillingFirstNameField((String) billingAddress.get("FirstName"));
-		info.fillBillingCountrySelect((String) billingAddress.get("Country"));		
 		info.fillBillingCityField((String) billingAddress.get("City"));
 		info.fillBillingAddressField((String) billingAddress.get("Address"));
 		
@@ -99,11 +100,12 @@ public class TestBuySingleItem extends SeleniumTemplate
 		}
 		else
 		{			
+			info.uncheckShippingAddressCheckBox();		
+			info.fillShippingCountrySelect((String) shippingAddress.get("Country"));
 			info.fillShippingProvinceSelect((String) shippingAddress.get("State"));
 			info.fillShippingPostalCodeField((String) shippingAddress.get("Postal"));
 			info.fillShippingLastNameField((String) shippingAddress.get("LastName"));
 			info.fillShippingFirstNameField((String) shippingAddress.get("FirstName"));
-			info.fillShippingCountrySelect((String) shippingAddress.get("Country"));
 			info.fillShippingCityField((String) shippingAddress.get("City"));
 			info.fillShippingAddressField((String) shippingAddress.get("Address"));
 		}

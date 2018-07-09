@@ -31,7 +31,12 @@ public class CheckOutInfoPage extends StorePage {
 	private WebElement billingCityField;
 
 	@FindBy(id = "wpsc_checkout_form_6")
+	private WebElement billingProvinceField;
+	
+	@FindBy(id="wpsc_checkout_form_7_region")
 	private WebElement billingProvinceSelectWE;
+
+	private Select billingProvinceSelect = new Select(billingProvinceSelectWE);
 	
 	@FindBy(id = "wpsc_checkout_form_7")
 	private WebElement billingCountrySelectWE;
@@ -56,8 +61,13 @@ public class CheckOutInfoPage extends StorePage {
 	private WebElement shippingCityField;
 
 	@FindBy(id = "wpsc_checkout_form_15")
+	private WebElement shippingProvinceField;
+	
+	@FindBy(id="wpsc_checkout_form_16_region")
 	private WebElement shippingProvinceSelectWE;
 
+	private Select shippingProvinceSelect = new Select(shippingProvinceSelectWE);
+	
 	@FindBy(id = "wpsc_checkout_form_16")
 	private WebElement shippingCountrySelectWE;
 	private Select shippingCountrySelect = new Select(shippingCountrySelectWE);
@@ -69,7 +79,7 @@ public class CheckOutInfoPage extends StorePage {
 		super(driver);
 		// just wait for the page to load explicitly, this is junk
 		WebDriverWait wait = new WebDriverWait(driver, 10);
-		wait.until(ExpectedConditions.visibilityOf(billingProvinceSelectWE));
+		wait.until(ExpectedConditions.visibilityOf(billingCityField));
 	}
 
 	public TransactionResultsPage clickPurchase() {
@@ -113,7 +123,14 @@ public class CheckOutInfoPage extends StorePage {
 	}
 
 	public void fillBillingProvinceSelect(String billingProvinceSelect) {
-		this.billingProvinceSelectWE.sendKeys(billingProvinceSelect);
+		if(this.billingProvinceField.isDisplayed())
+		{
+			this.billingProvinceField.sendKeys(billingProvinceSelect);
+		}
+		else
+		{
+			this.billingProvinceSelect.selectByVisibleText(billingProvinceSelect);
+		}
 	}
 
 	public void fillBillingCountrySelect(String billingCountrySelect) {
@@ -145,7 +162,14 @@ public class CheckOutInfoPage extends StorePage {
 	}
 
 	public void fillShippingProvinceSelect(String shippingProvinceSelect) {
-		this.shippingProvinceSelectWE.sendKeys(shippingProvinceSelect);
+		if(this.shippingProvinceField.isDisplayed())
+		{		
+			this.shippingProvinceField.sendKeys(shippingProvinceSelect);
+		}
+		else
+		{
+			this.shippingProvinceSelect.selectByVisibleText(shippingProvinceSelect);
+		}
 	}
 
 	public void fillShippingCountrySelect(String shippingCountrySelect) {
