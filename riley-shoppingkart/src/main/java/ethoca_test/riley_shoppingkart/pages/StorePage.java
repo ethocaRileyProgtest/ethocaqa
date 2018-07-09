@@ -9,9 +9,13 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.log4testng.Logger;
 
 public class StorePage {
 
+	protected static final Logger testLog = Logger
+			.getLogger(StorePage.class);
+	
 	protected WebDriver driver;
 	
 	@FindBy(xpath="//a[@class='cart_icon' and @title='Checkout']")
@@ -28,6 +32,7 @@ public class StorePage {
 	
 	public ProductListPage goToAccessories()
 	{
+		testLog.debug("Navigating to accessories page");
 		Actions action = new Actions(driver);		
 		action.moveToElement(productCategoryMenu).build().perform();
 		productCategoryMenu.findElement(By.xpath("//a[contains(text(), 'Accessories')]")).click();
@@ -36,6 +41,7 @@ public class StorePage {
 	
 	public CheckOutCartPage clickCheckOut()
 	{
+		testLog.debug("Navigating to checkout cart page");
 		checkOutLink.click();
 		waitUntilJSReady();
 		return new CheckOutCartPage(driver);
@@ -55,11 +61,11 @@ public class StorePage {
  
         //Wait Javascript until it is Ready!
         if(!jsReady) {
-            System.out.println("JS in NOT Ready!");
+            testLog.debug("JS in NOT Ready!");
             //Wait for Javascript to load
             wait.until(jsLoad);
         } else {
-            System.out.println("JS is Ready!");
+            testLog.debug("JS is Ready!");
         }
     }
 }

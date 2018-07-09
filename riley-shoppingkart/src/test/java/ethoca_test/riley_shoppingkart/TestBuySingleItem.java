@@ -78,7 +78,9 @@ public class TestBuySingleItem extends SeleniumTemplate
 		accessories.AddItemToCart(item);
 		CheckOutCartPage cart = accessories.clickCheckOut();
 
-		// verify some stuff here
+		testLog.debug("Verify cart items present");
+		Map<String, Integer> items = cart.getCartItems();
+		Assert.assertEquals(items.get(item), (Integer) 1, "ERROR: Mismatched item quantity for item [" + item + "]");
 		
 		CheckOutInfoPage info = cart.clickContinue();
 		
@@ -116,8 +118,10 @@ public class TestBuySingleItem extends SeleniumTemplate
 		double totalForItem = result.getTotalForItem(item);		
 		double total = result.getTotal();
 		double shipping = result.getTotalShipping();
-		int qty = result.getQtyForItem(item);
-		Assert.assertEquals(itemPrice * qty, totalForItem, "ERROR: Item Total Incorrect");		
-		Assert.assertEquals(itemPrice +shipping, total, "ERROR: More than Single Item Cost in Total");
+		int qty = result.getQtyForItem(item);		
+		testLog.debug("Verifying total with quantity");
+		Assert.assertEquals(itemPrice * qty, totalForItem, "ERROR: Item Total Incorrect");
+		testLog.debug("Verifying total with shipping");
+		Assert.assertEquals(itemPrice +shipping, total, "ERROR: Shipping cost incorrectly added to total");
 	}
 }

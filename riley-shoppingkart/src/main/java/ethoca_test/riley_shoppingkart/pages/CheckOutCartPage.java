@@ -28,6 +28,7 @@ public class CheckOutCartPage extends StorePage {
 	 *         quantity of each product in the cart
 	 */
 	public Map<String, Integer> getCartItems() {
+		testLog.debug("Retrieving cart items");
 		Map<String, Integer> cartItems = new HashMap<>();
 		List<WebElement> cartItemsLines = cartItemsTable.findElements(By
 				.xpath("//tr[contains(@class, 'product_row')]"));
@@ -44,6 +45,7 @@ public class CheckOutCartPage extends StorePage {
 	
 	public CheckOutInfoPage clickContinue()
 	{
+		testLog.debug("Clicking Continue button");
 		continueButton.click();
 		return new CheckOutInfoPage(driver);
 	}

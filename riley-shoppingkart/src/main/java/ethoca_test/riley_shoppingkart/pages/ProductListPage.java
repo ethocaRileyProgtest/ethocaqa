@@ -26,6 +26,7 @@ public class ProductListPage extends StorePage {
 	 */
 	public void AddItemToCart(String itemName)
 	{
+		testLog.debug("Adding item ["+itemName+"] to cart");
 		WebElement itemTableCell = productsTable.findElement(By.xpath("//div[@class='productcol' and .//a[contains(text(), '" + itemName + "')]]"));
 		WebElement addToCartButton = itemTableCell.findElement(By.className("wpsc_buy_button"));
 		addToCartButton.click();
@@ -37,6 +38,7 @@ public class ProductListPage extends StorePage {
 	 */
 	public List<String> getAllProducts()
 	{
+		testLog.debug("Searching product titles");
 		List<WebElement> productLinks = driver.findElements(By.className("wpsc_product_title"));
 		List<String> productTitles = new ArrayList<>();
 		for(WebElement e : productLinks)

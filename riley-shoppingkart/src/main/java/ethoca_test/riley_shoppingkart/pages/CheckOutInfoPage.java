@@ -32,12 +32,12 @@ public class CheckOutInfoPage extends StorePage {
 
 	@FindBy(id = "wpsc_checkout_form_6")
 	private WebElement billingProvinceField;
-	
-	@FindBy(id="wpsc_checkout_form_7_region")
+
+	@FindBy(id = "wpsc_checkout_form_7_region")
 	private WebElement billingProvinceSelectWE;
 
 	private Select billingProvinceSelect = new Select(billingProvinceSelectWE);
-	
+
 	@FindBy(id = "wpsc_checkout_form_7")
 	private WebElement billingCountrySelectWE;
 	private Select billingCountrySelect = new Select(billingCountrySelectWE);
@@ -62,12 +62,12 @@ public class CheckOutInfoPage extends StorePage {
 
 	@FindBy(id = "wpsc_checkout_form_15")
 	private WebElement shippingProvinceField;
-	
-	@FindBy(id="wpsc_checkout_form_16_region")
+
+	@FindBy(id = "wpsc_checkout_form_16_region")
 	private WebElement shippingProvinceSelectWE;
 
 	private Select shippingProvinceSelect = new Select(shippingProvinceSelectWE);
-	
+
 	@FindBy(id = "wpsc_checkout_form_16")
 	private WebElement shippingCountrySelectWE;
 	private Select shippingCountrySelect = new Select(shippingCountrySelectWE);
@@ -83,12 +83,14 @@ public class CheckOutInfoPage extends StorePage {
 	}
 
 	public TransactionResultsPage clickPurchase() {
+		testLog.debug("Clicking Purchase button");
 		purchaseButton.click();
 		waitUntilJSReady();
 		return new TransactionResultsPage(driver);
 	}
 
 	public void checkShippingAddressCheckBox() {
+		testLog.debug("Ensuring shipping address box is checked");
 		if (shippingAddressCheckBox.isSelected())
 			return;
 		else
@@ -96,6 +98,7 @@ public class CheckOutInfoPage extends StorePage {
 	}
 
 	public void uncheckShippingAddressCheckBox() {
+		testLog.debug("Ensuring shipping address box is unchecked");
 		if (!shippingAddressCheckBox.isSelected())
 			return;
 		else
@@ -103,80 +106,94 @@ public class CheckOutInfoPage extends StorePage {
 	}
 
 	public void fillEmailField(String email) {
+		testLog.debug("Filling email field");
 		this.emailField.sendKeys(email);
 	}
 
 	public void fillBillingFirstNameField(String billingFirstName) {
+		testLog.debug("Filling billing first name field");
 		this.billingFirstNameField.sendKeys(billingFirstName);
 	}
 
 	public void fillBillingLastNameField(String billingLastName) {
+		testLog.debug("Filling billing last name field");
 		this.billingLastNameField.sendKeys(billingLastName);
 	}
 
 	public void fillBillingAddressField(String billingAddress) {
+		testLog.debug("Filling billing address field");
 		this.billingAddressField.sendKeys(billingAddress);
 	}
 
 	public void fillBillingCityField(String billingCity) {
+		testLog.debug("Filling billing city field");
 		this.billingCityField.sendKeys(billingCity);
 	}
 
-	public void fillBillingProvinceSelect(String billingProvinceSelect) {
-		if(this.billingProvinceField.isDisplayed())
-		{
+	public void fillBillingProvinceSelect(String billingProvinceSelect) {		
+		if (this.billingProvinceField.isDisplayed()) {
+			testLog.debug("Filling billing state field");
 			this.billingProvinceField.sendKeys(billingProvinceSelect);
-		}
-		else
-		{
-			this.billingProvinceSelect.selectByVisibleText(billingProvinceSelect);
+		} else {
+			testLog.debug("Selecting billing state");
+			this.billingProvinceSelect
+					.selectByVisibleText(billingProvinceSelect);
 		}
 	}
 
 	public void fillBillingCountrySelect(String billingCountrySelect) {
+		testLog.debug("Selecting billing country");
 		this.billingCountrySelect.selectByVisibleText(billingCountrySelect);
 	}
 
 	public void fillBillingPostalCodeField(String billingPostalCode) {
+		testLog.debug("Filling billing postalcode field");
 		this.billingPostalCodeField.sendKeys(billingPostalCode);
 	}
 
 	public void fillBillingPhoneField(String billingPhone) {
+		testLog.debug("Filling phone field");
 		this.billingPhoneField.sendKeys(billingPhone);
 	}
 
 	public void fillShippingFirstNameField(String shippingFirstName) {
+		testLog.debug("Filling shipping first name field");
 		this.shippingFirstNameField.sendKeys(shippingFirstName);
 	}
 
 	public void fillShippingLastNameField(String shippingLastName) {
+		testLog.debug("Filling shipping last name field");
 		this.shippingLastNameField.sendKeys(shippingLastName);
 	}
 
 	public void fillShippingAddressField(String shippingAddress) {
+		testLog.debug("Filling shipping address field");
 		this.shippingAddressField.sendKeys(shippingAddress);
 	}
 
 	public void fillShippingCityField(String shippingCity) {
+		testLog.debug("Filling shipping city field");
 		this.shippingCityField.sendKeys(shippingCity);
 	}
 
 	public void fillShippingProvinceSelect(String shippingProvinceSelect) {
-		if(this.shippingProvinceField.isDisplayed())
-		{		
+		if (this.shippingProvinceField.isDisplayed()) {
+			testLog.debug("Filling shipping state field");
 			this.shippingProvinceField.sendKeys(shippingProvinceSelect);
-		}
-		else
-		{
-			this.shippingProvinceSelect.selectByVisibleText(shippingProvinceSelect);
+		} else {
+			testLog.debug("Selecting shipping state");
+			this.shippingProvinceSelect
+					.selectByVisibleText(shippingProvinceSelect);
 		}
 	}
 
 	public void fillShippingCountrySelect(String shippingCountrySelect) {
+		testLog.debug("Selecting shipping country");
 		this.shippingCountrySelect.selectByVisibleText(shippingCountrySelect);
 	}
 
 	public void fillShippingPostalCodeField(String shippingPostalCode) {
+		testLog.debug("Filling shipping postal code field");
 		this.shippingPostalCodeField.sendKeys(shippingPostalCode);
 	}
 

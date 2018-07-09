@@ -37,7 +37,7 @@ public class TableWebElement
 	 * @return the WebElement representation of the cell
 	 */
 	public WebElement getCell(String column, int row)
-	{
+	{		
 		return tableRoot.findElement(By.xpath("//tr["+row+"]/td[" + columns.get(column) + "]"));
 	}
 	

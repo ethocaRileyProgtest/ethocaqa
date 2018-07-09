@@ -23,7 +23,7 @@ import org.testng.log4testng.Logger;
  */
 public class SeleniumTemplate {
 
-	private static final Logger testLog = Logger
+	protected static final Logger testLog = Logger
 			.getLogger(SeleniumTemplate.class);
 
 	protected WebDriver driver;
@@ -39,6 +39,7 @@ public class SeleniumTemplate {
 	@Parameters({ "browser" })
 	@BeforeClass
 	public void startSeleniumBrowser(@Optional("CHROME") String browser) {
+		testLog.debug("Preparing to launch browser [" + browser + "]");
 		BrowserEnum startBrowser = BrowserEnum.valueOf(browser.toUpperCase());
 		switch (startBrowser) {
 		case IE: {
@@ -69,7 +70,7 @@ public class SeleniumTemplate {
 	 */
 	@BeforeSuite
 	public void setUpLogging() {
-		testLog.info("Logging initialized!");
+		testLog.debug("Logging initialized!");
 	}
 
 	/**
